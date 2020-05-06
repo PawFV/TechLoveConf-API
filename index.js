@@ -17,6 +17,10 @@ const db = mongoose.connection;
 // ROUTES
 app.use('/api/users', usersRoute);
 
+app.get('/', (req, res) => {
+   res.send("<h1>My api</h1>")
+})
+
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
    console.log("Mongo Online");
