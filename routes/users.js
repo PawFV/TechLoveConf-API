@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/Users')
 
-
 // GET ONE
 router.get('/:id', async (req, res) => {
    const userId = req.params.id;
@@ -18,7 +17,7 @@ router.get('/:id', async (req, res) => {
 // GET ALL
 router.get('/', async (req, res) => {
    try {
-      const userList = await Users.find().limit(20);
+      const userList = await Users.find();
       res.status(200).json(userList);
    } catch {
       res.status(404).json({ msg: "sorry bad request." });
@@ -30,6 +29,10 @@ router.post('/', async (req, res) => {
    const user = new Users({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
+      email: req.body.email,
+      jobTitle: req.body.jobTitle,
+      avatarUrl: req.body.avatarUrl,
+      twitter: req.body.twitter
    });
 
    try {
@@ -59,7 +62,11 @@ router.patch('/:id', async (req, res) => {
       await Users.updateOne({ _id: userId }, {
          $set: {
             firstName: req.body.firstName,
-            lastName: req.body.lastName
+            lastName: req.body.lastName,
+            email: req.body.email,
+            jobTitle: req.body.jobTitle,
+            avatarUrl: req.body.avatarUrl,
+            twitter: req.body.twitter
          }
       });
 
