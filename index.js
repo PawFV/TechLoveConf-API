@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const usersRoute = require('./routes/users');
 const bodyParser = require('body-parser');
 require('dotenv/config');
-
+var cors = require('cors');
+// CORS ENABLED
+app.use(cors());
 // BODY PARSER
 app.use(bodyParser.json());
 
