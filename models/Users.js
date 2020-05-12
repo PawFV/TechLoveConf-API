@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const PostSchema = mongoose.Schema({
    firstName: {
       type: String,
-      required: false
+      required: true
    },
    lastName: {
       type: String,
-      required: false
+      required: true
    },
    date: {
       type: Date,
@@ -15,7 +15,7 @@ const PostSchema = mongoose.Schema({
    },
    email: {
       type: String,
-      required: false
+      required: true
    },
    jobTitle: {
       type: String,
