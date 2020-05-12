@@ -56,25 +56,21 @@ router.delete('/:id', verify, async (req, res) => {
 })
 
 // UPDATE
-router.patch('/:id', verify, async (req, res) => {
+router.put('/:id', verify, async (req, res) => {
    const userId = req.params.id;
+   const bodyRequest = req.body
 
    try {
-      await Users.updateOne({ _id: userId }, {
-         $set: {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            jobTitle: req.body.jobTitle,
-            avatarUrl: req.body.avatarUrl,
-            twitter: req.body.twitter
-         }
+      const updatedUser = await Users.findByIdAndUpdate({ _id: userId }, {
+         $set: bodyRequest
+      }, {
+         new: true
       });
 
-      const updatedUser = await Users.findById(userId);
       res.status(200).json(updatedUser);
    } catch (error) {
       res.status(400).json({ message: `You must include firstName or lastName` });
+      console.log(error)
    }
 })
 
