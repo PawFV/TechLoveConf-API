@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 const mongoose = require('mongoose');
 const usersRoute = require('./routes/users');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 require('dotenv/config');
 
 // BODY PARSER
@@ -26,4 +26,4 @@ db.once('open', function () {
    console.log("Mongo Online");
 });
 
-app.listen(PORT, () => console.log(`Node Online`));
+app.listen(PORT, () => console.log(`Node Online ${PORT}`));

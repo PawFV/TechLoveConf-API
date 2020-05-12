@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const Users = require('../models/Users')
+const Users = require('../models/Users');
+const verify = require('./verifyToken');
 
 // GET ONE
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
    const userId = req.params.id;
    try {
       const userFound = await Users.findById(userId);
       res.status(200).json(userFound);
 
    } catch (err) {
-      res.status(400).json({ msg: `Sorry we couldn't find user with id ${userId}` });
+      res.status(400).json({ message: `Sorry we couldn't find user with id ${userId}` });
    }
 });
 
@@ -20,12 +21,12 @@ router.get('/', async (req, res) => {
       const userList = await Users.find();
       res.status(200).json(userList);
    } catch {
-      res.status(404).json({ msg: "sorry bad request." });
+      res.status(404).json({ message: "sorry bad request." });
    }
 });
 
 // POST
-router.post('/', async (req, res) => {
+router.post('/', verify, async (req, res) => {
    const user = new Users({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -37,25 +38,25 @@ router.post('/', async (req, res) => {
 
    try {
       const savedPost = await user.save();
-      res.json(savedPost)
+      res.status(200).json(savedPost)
    } catch (error) {
-      res.json({ msg: error })
+      res.json({ message: error })
    }
 })
 
 // DELETE
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
    const userId = req.params.id;
    try {
       await Users.remove({ _id: userId });
-      res.status(200).json({ msg: "User deleted!" })
+      res.status(200).json({ message: "User deleted!" })
    } catch (err) {
-      res.status(404).json({ msg: `Sorry we couldn't find user with id ${userId}` })
+      res.status(404).json({ message: `Sorry we couldn't find user with id ${userId}` })
    }
 })
 
 // UPDATE
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', verify, async (req, res) => {
    const userId = req.params.id;
 
    try {
@@ -73,7 +74,7 @@ router.patch('/:id', async (req, res) => {
       const updatedUser = await Users.findById(userId);
       res.status(200).json(updatedUser);
    } catch (error) {
-      res.status(400).json({ msg: `You must include firstName or lastName` });
+      res.status(400).json({ message: `You must include firstName or lastName` });
    }
 })
 
