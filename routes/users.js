@@ -58,11 +58,10 @@ router.delete('/:id', verify, async (req, res) => {
 // UPDATE
 router.put('/:id', verify, async (req, res) => {
    const userId = req.params.id;
-   const bodyRequest = req.body
 
    try {
       const updatedUser = await Users.findByIdAndUpdate({ _id: userId }, {
-         $set: bodyRequest
+         $set: req.body
       }, {
          new: true
       });
