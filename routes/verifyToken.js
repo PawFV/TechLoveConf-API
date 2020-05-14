@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
       const verified = JWT.verify(token, process.env.TOKEN_SECRET);
       req.user = verified;
    } catch (error) {
-      res.status(400).json({ message: 'Invalid Token' });
+      return res.status(400).json({ message: 'Invalid Token' });
    }
    next();
 }
