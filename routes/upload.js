@@ -45,7 +45,7 @@ router.put('/', verify, upload.single('file'), async (req, res) => {
 
       res.status(200).json({ avatarUrl: updatedUser.avatarUrl });
    } catch (error) {
-      res.status(400).json({ message: `Can't upload your file.` });
+      res.status(400).json({ message: `Can't upload your file. Allowed extensions: png/jpg. Max size 500kb.` });
       console.log(error)
    }
 })
